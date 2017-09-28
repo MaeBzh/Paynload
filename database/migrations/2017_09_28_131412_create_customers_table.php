@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCompaniesTable extends Migration
+class CreateCustomersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,18 @@ class CreateCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('raison_sociale');
+            $table->string('nom');
+            $table->string('prenom');
+            $table->string('raison_sociale')->nullable();
             $table->string('adresse_rue');
             $table->string('adresse_cp');
             $table->string('adresse_ville');
-            $table->string('siret');
-            $table->string('tva_intra')->nullable();
             $table->string('telephone');
-            $table->string('nom_dirigeant');
-            $table->string('prenom_dirigeant');
-            $table->string('civilite_dirigeant');
+            $table->string('siret')->nullable();
+            $table->string('email')->unique();
+            $table->string('password');
             $table->string('etat_compte');
             $table->timestamp('date_creation');
             $table->timestamp('date_derniere_edition');
@@ -32,7 +32,6 @@ class CreateCompaniesTable extends Migration
             $table->rememberToken();
             $table->timestamps();
             $table->integer('user_id')->unsigned();
-
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
@@ -44,6 +43,6 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('companies');
+        Schema::dropIfExists('customers');
     }
 }
