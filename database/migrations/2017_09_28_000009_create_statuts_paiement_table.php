@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaymentStatusTable extends Migration
+class CreateStatutsPaiementTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,11 @@ class CreatePaymentStatusTable extends Migration
      */
     public function up()
     {
-        Schema::create('payment_status', function (Blueprint $table) {
+        Schema::create('statuts_paiement', function (Blueprint $table) {
             $table->increments('id');
             $table->string('libelle');
-            $table->timestamps();
+            $table->timestamp('date_creation')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('date_edition')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
 
     }
@@ -28,6 +29,6 @@ class CreatePaymentStatusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('payment_status');
+        Schema::dropIfExists('statuts_paiement');
     }
 }

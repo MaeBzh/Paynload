@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateKycTypeTable extends Migration
+class CreateStatutsDossierTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateKycTypeTable extends Migration
      */
     public function up()
     {
-        Schema::create('kyc_documents', function (Blueprint $table) {
+        Schema::create('statuts_dossier', function (Blueprint $table) {
             $table->increments('id');
             $table->string('libelle');
-            $table->timestamps();
-
+            $table->timestamp('date_creation')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('date_edition')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
     }
 
@@ -28,6 +28,6 @@ class CreateKycTypeTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kyc_type');
+        Schema::dropIfExists('statuts_dossier');
     }
 }

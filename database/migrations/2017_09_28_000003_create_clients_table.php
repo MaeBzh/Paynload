@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCustomersTable extends Migration
+class CreateClientsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,26 +13,22 @@ class CreateCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::create('customers', function (Blueprint $table) {
+        Schema::create('clients', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nom');
             $table->string('prenom');
+            $table->string('email')->unique();
+            $table->string('mot_de_passe');
+            $table->boolean('est_bloque')->default(false);
+            $table->rememberToken();
             $table->string('raison_sociale')->nullable();
             $table->string('adresse_rue');
             $table->string('adresse_cp');
             $table->string('adresse_ville');
             $table->string('telephone');
             $table->string('siret')->nullable();
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('etat_compte');
-            $table->timestamp('date_creation');
-            $table->timestamp('date_derniere_edition');
-            $table->timestamp('date_derniere_connexion');
-            $table->rememberToken();
-            $table->timestamps();
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->timestamp('date_creation')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('date_edition')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
     }
 
@@ -43,6 +39,6 @@ class CreateCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customers');
+        Schema::dropIfExists('clients');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmailsHistoryTable extends Migration
+class CreateHistoriqueEmailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,18 @@ class CreateEmailsHistoryTable extends Migration
      */
     public function up()
     {
-        Schema::create('emails_history', function (Blueprint $table) {
+        Schema::create('historique_emails', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamp('date');
-            $table->timestamps();
             $table->string('expediteur');
             $table->string('destinataire');
-            $table->string('destinataire_complementaire');
+            $table->string('destinataires_complementaires');
             $table->string('piece_jointe');
+            $table->string('objet');
             $table->text('message');
-            $table->integer('email_type_id')->unsigned();
-            $table->foreign('email_type_id')->references('id')->on('email_type');
+            $table->timestamp('date_envoi')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->integer('type_email_id')->unsigned();
+
+            $table->foreign('type_email_id')->references('id')->on('types_email');
 
         });
     }
@@ -35,6 +36,6 @@ class CreateEmailsHistoryTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('emails_history');
+        Schema::dropIfExists('historique_emails');
     }
 }

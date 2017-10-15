@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFolderStatusTable extends Migration
+class CreateTypesEmailTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateFolderStatusTable extends Migration
      */
     public function up()
     {
-        Schema::create('folder_status', function (Blueprint $table) {
+        Schema::create('types_email', function (Blueprint $table) {
             $table->increments('id');
             $table->string('libelle');
-            $table->timestamps();
-
+            $table->string('template_html');
+            $table->timestamp('date_creation')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('date_edition')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
     }
 
@@ -28,6 +29,6 @@ class CreateFolderStatusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('folder_status');
+        Schema::dropIfExists('types_email');
     }
 }
