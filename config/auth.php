@@ -17,7 +17,6 @@ return [
         'guard' => 'web',
         'passwords' => 'users',
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards
@@ -45,11 +44,45 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+
+        // custom
+
+        'entreprise' => [
+            'driver' => 'session',
+            'provider' => 'entreprises',
+        ],
+
+        'api.entreprise' => [
+            'driver' => 'token',
+            'provider' => 'entreprises',
+        ],
+
+        'client' => [
+            'driver' => 'session',
+            'provider' => 'clients',
+        ],
+
+        'api.client' => [
+            'driver' => 'token',
+            'provider' => 'clients',
+        ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
+
+        'api.admin' => [
+            'driver' => 'token',
+            'provider' => 'admins',
+        ],
+
+
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | User Providers
+    | Utilisateur Providers
     |--------------------------------------------------------------------------
     |
     | All authentication drivers have a user provider. This defines how the
@@ -67,13 +100,25 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => App\Utilisateur::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        // custom
+
+         'entreprises' => [
+             'driver' => 'eloquent',
+             'model' => App\Entreprise::class,
+         ],
+
+        'clients' => [
+            'driver' => 'eloquent',
+            'model' => App\Client::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Admin::class,
+        ],
     ],
 
     /*
